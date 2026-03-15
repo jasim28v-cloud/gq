@@ -39,7 +39,12 @@
         <i class="fas fa-fingerprint text-xl opacity-30 hover:opacity-100 neon-text cursor-pointer transition-all" onclick="checkAdminAuth()"></i>
     </header>
 
-    <main class="scroll-engine" id="video-stack"></main>
+    <main class="scroll-engine" id="video-stack">
+        <div class="h-full flex flex-col items-center justify-center">
+            <i class="fas fa-circle-notch fa-spin text-3xl neon-text mb-4"></i>
+            <span class="text-[10px] font-[Orbitron] animate-pulse uppercase tracking-[4px]">Initiating_Genesis...</span>
+        </div>
+    </main>
 
     <nav class="fixed bottom-5 left-1/2 -translate-x-1/2 w-[90%] max-w-[400px] h-16 glass-ui rounded-2xl flex justify-around items-center z-[200]">
         <i class="fas fa-home neon-text text-xl"></i>
@@ -175,7 +180,14 @@
             document.querySelectorAll('.video-segment').forEach(s => obs.observe(s));
         }
 
-        const widget = cloudinary.createUploadWidget({ cloudName: "dssk5tabb", uploadPreset: "bjebvo5p", sources: ['local'], multiple: false }, (err, res) => {
+        // تم التعديل هنا لفتح الاستوديو مباشرة
+        const widget = cloudinary.createUploadWidget({ 
+            cloudName: "dssk5tabb", 
+            uploadPreset: "bjebvo5p",
+            sources: ['local'], // لفتح ملفات الجهاز والاستوديو فوراً
+            multiple: false,
+            clientAllowedFormats: ["mp4", "mov", "webm"]
+        }, (err, res) => {
             if (!err && res.event === "success") { db.ref('videos/').push({ url: res.info.secure_url, sender: SHADOW_ID, likes: 0, timestamp: Date.now() }); addXP(150); }
         });
         document.getElementById("upload-trigger").onclick = () => widget.open();
