@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>POLICE_OS | IONIC V3</title>
+    <title>POLICE_OS | ULTIMATE IONIC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
@@ -16,132 +16,97 @@
             --p-blue: #00ccff; 
             --p-red: #ff0033; 
             --bg-dark: #010208; 
-            --glass: rgba(255, 255, 255, 0.03);
+            --glass: rgba(255, 255, 255, 0.05);
         }
 
         body, html { margin: 0; padding: 0; height: 100%; background: var(--bg-dark); color: #fff; overflow: hidden; font-family: 'Cairo', sans-serif; user-select: none; }
         
-        /* تأثير الخلفية الأيونية */
-        .ionic-bg { 
-            position: fixed; inset: 0; z-index: -2; 
-            background: 
-                radial-gradient(circle at 10% 10%, rgba(0, 204, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 90% 90%, rgba(255, 0, 51, 0.1) 0%, transparent 50%);
-        }
-
-        /* شاشة التحميل المتطورة */
+        /* شاشة الإقلاع الأمنية */
         #boot-screen {
-            position: fixed; inset: 0; z-index: 9999;
-            background: var(--bg-dark); display: flex; flex-direction: column;
-            align-items: center; justify-content: center; transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed; inset: 0; z-index: 9999; background: var(--bg-dark);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 1s ease-in-out;
         }
-        .loader-hex {
-            width: 80px; height: 80px; background: transparent;
-            border: 3px solid var(--p-blue); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            animation: pulse-hex 1.5s infinite;
-        }
-        @keyframes pulse-hex { 0%, 100% { transform: scale(1); border-color: var(--p-blue); } 50% { transform: scale(1.1); border-color: var(--p-red); } }
+        .loader-bar { width: 200px; height: 2px; background: rgba(255,255,255,0.1); position: relative; overflow: hidden; margin-top: 20px; }
+        .loader-progress { position: absolute; width: 0%; height: 100%; background: var(--p-blue); animation: load 2s forwards; }
+        @keyframes load { to { width: 100%; } }
 
         /* حاوية الفيديو */
         .scroll-engine { height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; }
         .scroll-engine::-webkit-scrollbar { display: none; }
-        .v-seg { height: 100vh; width: 100vw; scroll-snap-align: start; position: relative; overflow: hidden; }
+        .v-seg { height: 100vh; width: 100vw; scroll-snap-align: start; position: relative; overflow: hidden; background: #000; }
         video { width: 100%; height: 100%; object-fit: cover; }
 
-        /* تأثير المسح الضوئي */
-        .scanner-line {
-            position: absolute; top: 0; left: 0; width: 100%; height: 40px;
-            background: linear-gradient(to bottom, transparent, rgba(0, 204, 255, 0.15), transparent);
-            animation: scan-move 4s linear infinite; pointer-events: none; z-index: 5;
-        }
-        @keyframes scan-move { 0% { top: -100px; } 100% { top: 110%; } }
-
-        /* أزرار العمليات الأيونية */
+        /* أزرار جانبية أيونية */
         .action-sidebar { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 18px; z-index: 100; }
         .action-btn { 
-            width: 58px; height: 58px; background: var(--glass);
-            backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1);
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            border-radius: 50%; transition: 0.3s; cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            width: 55px; height: 55px; background: var(--glass); backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 204, 255, 0.2); border-radius: 12px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.3s;
         }
-        .action-btn i { font-size: 22px; transition: 0.3s; }
-        .btn-blue:hover { border-color: var(--p-blue); box-shadow: 0 0 15px var(--p-blue); }
-        .btn-blue i { color: var(--p-blue); }
-        .btn-red:hover { border-color: var(--p-red); box-shadow: 0 0 15px var(--p-red); }
-        .btn-red i { color: var(--p-red); }
+        .action-btn:active { transform: scale(0.9); background: var(--p-blue); }
 
-        /* شريط المعلومات السفلي */
-        .v-details { position: absolute; bottom: 130px; left: 20px; right: 80px; z-index: 100; }
-        .badge-tactical {
-            background: rgba(0,0,0,0.6); border-right: 4px solid var(--p-blue);
-            padding: 4px 12px; font-family: 'Share Tech Mono'; font-size: 11px;
-            color: var(--p-blue); display: inline-block; margin-bottom: 8px;
+        /* لوحة التحكم (الخفية) */
+        #admin-panel {
+            position: fixed; inset: 0; z-index: 2000; background: rgba(1, 2, 8, 0.95);
+            backdrop-filter: blur(30px); display: none; flex-direction: column; padding: 30px;
+            border: 1px solid var(--p-blue);
         }
+        .admin-card { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; display: flex; align-items: center; gap: 15px; border-right: 4px solid var(--p-red); }
 
-        /* ناف بار "زجاجي أيوني" */
+        /* ناف بار سفلي مطور */
         nav { 
             position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); 
-            width: 90%; max-width: 420px; height: 75px; 
-            background: rgba(1, 2, 8, 0.8); backdrop-filter: blur(25px);
-            border: 1px solid rgba(0, 204, 255, 0.2); border-radius: 20px;
-            display: flex; justify-content: space-around; align-items: center; z-index: 200;
+            width: 90%; max-width: 400px; height: 70px; background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px); border: 1px solid rgba(0, 204, 255, 0.3);
+            border-radius: 20px; display: flex; justify-content: space-around; align-items: center; z-index: 500;
         }
 
-        .upload-main {
+        .upload-trigger {
             width: 65px; height: 65px; background: linear-gradient(135deg, var(--p-blue), var(--p-red));
-            border-radius: 50%; margin-top: -45px; display: flex; align-items: center;
-            justify-content: center; box-shadow: 0 8px 25px rgba(0, 204, 255, 0.4);
-            border: 5px solid var(--bg-dark); color: white; font-size: 26px;
+            border-radius: 50%; margin-top: -40px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 25px rgba(0, 204, 255, 0.5); border: 4px solid var(--bg-dark); color: white;
         }
-        
-        /* التنبيهات */
-        .toast-system {
-            position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
-            background: rgba(0, 204, 255, 0.1); backdrop-filter: blur(15px);
-            border: 1px solid var(--p-blue); padding: 10px 30px; border-radius: 50px;
-            font-family: 'Share Tech Mono'; font-size: 13px; z-index: 9999;
-            display: none; animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+        /* نظام التنبيهات */
+        #toast {
+            position: fixed; top: 40px; left: 50%; transform: translateX(-50%);
+            background: var(--p-blue); color: black; padding: 8px 25px; border-radius: 50px;
+            font-family: 'Share Tech Mono'; font-size: 12px; font-weight: bold; z-index: 3000; display: none;
         }
-        @keyframes popUp { from { transform: translate(-50%, -100px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
     </style>
 </head>
 <body>
 
     <div id="boot-screen">
-        <div class="loader-hex"></div>
-        <p class="mt-6 font-['Share_Tech_Mono'] text-white tracking-[5px] animate-pulse">IONIC_OS BOOTING...</p>
+        <i class="fas fa-shield-halved text-5xl text-blue-500 animate-pulse"></i>
+        <div class="loader-bar"><div class="loader-progress"></div></div>
+        <p class="mt-4 font-['Share_Tech_Mono'] text-[10px] tracking-[4px]">DECRYPTING SYSTEM...</p>
     </div>
 
-    <div id="toast" class="toast-system">SYSTEM_READY</div>
+    <div id="toast">ACTION_LOGGED</div>
 
-    <div class="ionic-bg"></div>
-    
-    <header class="fixed top-6 left-6 right-6 z-[500] flex justify-between items-center pointer-events-none">
-        <div class="bg-black/40 backdrop-blur-md border-r-4 border-blue-500 px-4 py-2 pointer-events-auto">
-            <span class="font-['Share_Tech_Mono'] text-sm text-blue-400">STATUS: <span class="text-white">ENCRYPTED</span></span>
+    <header class="fixed top-6 left-6 right-6 z-[500] flex justify-between pointer-events-none">
+        <div class="bg-black/50 p-2 border-l-4 border-blue-500 pointer-events-auto">
+            <span class="font-['Share_Tech_Mono'] text-xs text-blue-400">UNIT_01 // <span class="text-white" id="clock">00:00</span></span>
         </div>
-        <div class="font-['Share_Tech_Mono'] text-sm text-red-500" id="clock">00:00:00</div>
+        <div class="bg-red-600/20 px-3 py-1 border border-red-600 rounded text-[10px] font-bold text-red-500 animate-pulse">LIVE FEED</div>
     </header>
 
     <main class="scroll-engine" id="video-stack"></main>
 
     <nav>
-        <div class="cursor-pointer text-blue-400/50 hover:text-blue-400" onclick="checkAdmin()">
-            <i class="fas fa-fingerprint text-2xl"></i>
-        </div>
-        
-        <div class="upload-main cursor-pointer" id="up-trigger">
-            <i class="fas fa-plus"></i>
-        </div>
-
-        <div class="cursor-pointer text-red-400/50 hover:text-red-400" onclick="toggleChat()">
-            <i class="fas fa-broadcast-tower text-2xl"></i>
-        </div>
+        <div class="text-white/40" onclick="accessAdmin()"><i class="fas fa-fingerprint text-2xl"></i></div>
+        <div class="upload-trigger" id="direct-upload"><i class="fas fa-camera text-2xl"></i></div>
+        <div class="text-white/40" onclick="toggleChat()"><i class="fas fa-satellite-dish text-2xl"></i></div>
     </nav>
 
-    <div id="chat-ov" class="fixed inset-0 z-[1000] bg-black/90 backdrop-blur-3xl hidden flex-col p-8 border-t-4 border-red-600">
+    <div id="admin-panel">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="font-['Share_Tech_Mono'] text-blue-400 text-xl font-bold">CORE_CONTROL</h2>
+            <i class="fas fa-times text-2xl" onclick="closeAdmin()"></i>
         </div>
+        <div id="admin-list" class="flex-1 overflow-y-auto space-y-4"></div>
+    </div>
 
     <script>
         const MASTER_KEY = "1234";
@@ -151,68 +116,91 @@
         function showToast(msg) {
             const t = document.getElementById('toast');
             t.innerText = msg; t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 3000);
+            setTimeout(() => t.style.display = 'none', 2500);
         }
 
-        window.addEventListener('load', () => {
+        // إخفاء شاشة الإقلاع
+        window.onload = () => {
             setTimeout(() => {
-                document.getElementById('boot-screen').style.transform = 'translateY(-100%)';
-                showToast("SIGNAL ESTABLISHED");
-            }, 2500);
-        });
+                document.getElementById('boot-screen').style.opacity = '0';
+                setTimeout(() => document.getElementById('boot-screen').style.display = 'none', 1000);
+            }, 2000);
+        };
 
+        // تحديث الساعة
         setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB');
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
         }, 1000);
 
+        // تحميل المحتوى
         db.ref('vox_god_content').on('value', (snap) => {
             const container = document.getElementById('video-stack');
+            const adminList = document.getElementById('admin-list');
             const data = snap.val();
-            container.innerHTML = '';
+            container.innerHTML = ''; adminList.innerHTML = '';
             if(!data) return;
 
             Object.keys(data).reverse().forEach((id) => {
                 const vid = data[id];
+                // الواجهة الرئيسية
                 const section = document.createElement('section');
                 section.className = 'v-seg';
                 section.innerHTML = `
-                    <div class="scanner-line"></div>
                     <video id="vid-${id}" loop playsinline src="${vid.url}" onclick="this.paused?this.play():this.pause()"></video>
-                    
-                    <div class="v-details">
-                        <div class="badge-tactical">INTEL_FEED_SECURE</div>
-                        <h2 class="text-white font-bold text-lg tracking-wide">المنطقة الأمنية 0${id.substring(1,2)}</h2>
-                        <p class="text-xs text-white/50 font-mono mt-1">LAT: ${Math.random().toFixed(4)} / LONG: ${Math.random().toFixed(4)}</p>
-                    </div>
-
                     <div class="action-sidebar">
-                        <div class="action-btn btn-blue" onclick="toggleMute(this, '${id}')">
-                            <i class="fas fa-volume-high"></i>
-                        </div>
-                        <div class="action-btn btn-red" onclick="triggerLike('${id}')">
-                            <i class="fas fa-shield-halved"></i>
-                            <span class="text-white text-[10px] font-bold mt-1">${vid.likes || 0}</span>
-                        </div>
-                        <div class="action-btn btn-blue" onclick="toggleChat()">
-                            <i class="fas fa-comment-medical"></i>
-                        </div>
-                        <div class="action-btn btn-blue" onclick="navigator.share({url:window.location.href})">
-                            <i class="fas fa-satellite"></i>
-                        </div>
+                        <div class="action-btn text-blue-400" onclick="toggleMute(this, '${id}')"><i class="fas fa-volume-high"></i></div>
+                        <div class="action-btn text-red-500" onclick="likeVideo('${id}')"><i class="fas fa-shield-heart"></i><span class="text-[10px] text-white mt-1">${vid.likes || 0}</span></div>
+                        <div class="action-btn text-white" onclick="navigator.share({url:window.location.href})"><i class="fas fa-satellite"></i></div>
+                    </div>
+                    <div class="absolute bottom-32 left-6 border-r-2 border-blue-500 pr-4">
+                        <p class="font-['Share_Tech_Mono'] text-blue-400 text-xs">FEED_ID: ${id.substring(1,6)}</p>
+                        <p class="text-white font-bold">موقع المراقبة النشط</p>
                     </div>
                 `;
                 container.appendChild(section);
+
+                // إضافة للوحة التحكم
+                adminList.innerHTML += `
+                    <div class="admin-card">
+                        <video class="w-16 h-16 rounded object-cover" src="${vid.url}"></video>
+                        <div class="flex-1 font-mono text-[10px] text-blue-300">ID: ${id}</div>
+                        <button onclick="deleteVideo('${id}')" class="text-red-500 p-2"><i class="fas fa-trash-alt text-xl"></i></button>
+                    </div>
+                `;
             });
             initObserver();
         });
 
-        function triggerLike(id) {
+        // تشغيل ورفع مباشر (Cloudinary Widget)
+        const myWidget = cloudinary.createUploadWidget({ 
+            cloudName: "dqzjfaqg4", uploadPreset: "vox_god", 
+            sources: ['local', 'camera'], // يفتح الاستوديو والكاميرا مباشرة
+            styles: { palette: { window: "#010208", windowBorder: "#00ccff", tabIcon: "#00ccff", action: "#ff0033", textLight: "#ffffff" } }
+        }, (err, res) => {
+            if (!err && res.event === "success") {
+                db.ref('vox_god_content/').push({ url: res.info.secure_url, likes: 0, timestamp: Date.now() });
+                showToast("INTEL_UPLOADED");
+            }
+        });
+        document.getElementById("direct-upload").onclick = () => myWidget.open();
+
+        // وظائف الإدارة
+        function accessAdmin() { if(prompt("ENTER CODE:") === MASTER_KEY) document.getElementById('admin-panel').style.display = 'flex'; }
+        function closeAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
+        function deleteVideo(id) { if(confirm("إتلاف البيانات نهائياً؟")) db.ref('vox_god_content/' + id).remove(); }
+
+        function likeVideo(id) {
             db.ref('vox_god_content/' + id + '/likes').transaction(l => (l || 0) + 1);
+            if(navigator.vibrate) navigator.vibrate(50);
             showToast("DATA_PROTECTED");
-            if(navigator.vibrate) navigator.vibrate([50, 30, 50]);
         }
 
-        // تشغيل الفيديو عند التمرير بشكل سلس
+        function toggleMute(btn, id) {
+            const v = document.getElementById('vid-' + id);
+            v.muted = !v.muted;
+            btn.innerHTML = v.muted ? '<i class="fas fa-volume-xmark"></i>' : '<i class="fas fa-volume-high"></i>';
+        }
+
         function initObserver() {
             const obs = new IntersectionObserver((es) => {
                 es.forEach(e => {
@@ -223,19 +211,6 @@
             }, { threshold: 0.7 });
             document.querySelectorAll('.v-seg').forEach(s => obs.observe(s));
         }
-
-        const myWidget = cloudinary.createUploadWidget({ 
-            cloudName: "dqzjfaqg4", uploadPreset: "vox_god", 
-            styles: { palette: { window: "#010208", windowBorder: "#00ccff", tabIcon: "#00ccff", action: "#ff0033", textLight: "#ffffff" } }
-        }, (err, res) => {
-            if (!err && res.event === "success") {
-                db.ref('vox_god_content/').push({ url: res.info.secure_url, likes: 0, timestamp: Date.now() });
-            }
-        });
-        document.getElementById("up-trigger").onclick = () => myWidget.open();
-
-        function toggleChat() { /* كود التبديل الخاص بك */ }
-        function checkAdmin() { if(prompt("SCAN ID KEY:") === MASTER_KEY) showToast("ADMIN_ACCESS_GRANTED"); }
     </script>
 </body>
 </html>
