@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Allow: /*.mp4$
+Allow: /*.mkv$
+Allow: /*.webm$
+
+# رابط الخريطة لسرعة الأرشفة
+Sitemap: https://jasim28v-cloud.github.io/gq/sitemap.xml
