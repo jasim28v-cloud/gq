@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  
+  <url>
+    <loc>https://jasim28v-cloud.github.io/gq/</loc>
+    <video:video>
+      <video:content_loc>https://jasim28v-cloud.github.io/gq/video1.mp4</video:content_loc>
+      <video:player_loc>https://jasim28v-cloud.github.io/gq/</video:player_loc>
+      <video:title>فيديو مرفوع سحابياً - Cloud Video</video:title>
+      <video:description>تصفح ومشاهدة الفيديوهات المرفوعة على السحابة الخاصة بجاسم</video:description>
+      <video:thumbnail_loc>https://jasim28v-cloud.github.io/gq/thumb.jpg</video:thumbnail_loc>
+    </video:video>
+  </url>
+</urlset>
